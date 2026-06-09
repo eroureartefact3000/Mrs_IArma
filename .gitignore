@@ -1,0 +1,64 @@
+# ============================================================
+# Secrets & environment
+# ============================================================
+.env
+.env.local
+.env.*.local
+
+# ============================================================
+# Python
+# ============================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+*.egg
+
+# ============================================================
+# IDE & OS
+# ============================================================
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# ============================================================
+# Pytest / coverage
+# ============================================================
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# ============================================================
+# Datasets (large, regenerable, NOT versioned)
+# ============================================================
+# Source images for Cannes Lions entries. Hosted separately
+# (Google Drive — see DOCUMENTATION.md). Downloaded by anyone
+# rebuilding the index from scratch.
+2024/
+2025/
+loser/
+
+# Design mockups (large screenshots, also hosted separately)
+design/
+
+# ============================================================
+# Dev artefacts (calibration runs, dev evaluations, drafts)
+# ============================================================
+# These are reproducible outputs from scripts/. The production
+# engine in pipeline/ + api/ doesn't depend on any of them.
+data_internal/
+
+# Lockfile (committed by uv, kept for reference)
+# Note: uv.lock IS committed by design — uncomment to ignore if needed
+# uv.lock
+
+# ============================================================
+# Anthropic / Voyage cached responses (if any)
+# ============================================================
+.cache/

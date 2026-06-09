@@ -1,0 +1,43 @@
+# Mrs IArma — local dev composition.
+#
+# One container: the FastAPI service (with the mini frontend served at /).
+# No DB, no Redis — the engine is stateless. The integrating back-end team
+# will add their own DB / cache / queue around this container.
+#
+# Run with:
+#     docker compose up --build
+# Then open http://localhost:8000
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mrs-iarma:local
+    container_name: mrs-iarma-api
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      # Override sensitive defaults for local dev. Production must override
+      # all of these via Secret Manager / equivalent.
+      ENVIRONMENT: development
+      LOG_LEVEL: INFO
+      # CORS: in dev we accept any origin. In prod set to your front-end domain.
+      ALLOWED_ORIGINS: "*"
+      # No auth in local dev. In prod, set API_KEY to a secret and configure
+      # the front-end to send the X-API-Key header.
+      API_KEY: ""
+      # Rate limits: tune as needed. Set to 0 to disable.
+      RATE_LIMIT_PER_MINUTE: "10"
+      RATE_LIMIT_PER_HOUR: "60"
+      # Daily budget cap: 0 = unlimited. Set to e.g. 200 in prod for safety.
+      DAILY_EVALUATION_CAP: "0"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request, sys; r=urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=3); sys.exit(0 if r.status == 200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s

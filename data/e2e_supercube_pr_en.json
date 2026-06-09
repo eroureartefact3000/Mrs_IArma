@@ -1,0 +1,279 @@
+{
+  "user_metadata": {
+    "campaign_name": "Supercube",
+    "agency": "Weber Shandwick Cologne",
+    "client": "Knorr",
+    "category": "PR",
+    "client_internationally_known": true
+  },
+  "tier_prediction": {
+    "predicted_tier": "Bronze",
+    "tier_label": "BRONZE LION",
+    "tier_probabilities": {
+      "Grand Prix": 0.016666666666666666,
+      "Gold": 0.10000000000000002,
+      "Silver": 0.24,
+      "Bronze": 0.4000000000000001,
+      "No Medal": 0.24333333333333332
+    },
+    "confidence": "medium",
+    "score_percent": 70,
+    "mystic_verdict": "Bronze stirs. Mrs Airma offers her encouragement.",
+    "axes": [
+      {
+        "key": "idea",
+        "label": "Creative Idea",
+        "score": 74,
+        "weight": 0.2
+      },
+      {
+        "key": "strategy",
+        "label": "Strategy",
+        "score": 76,
+        "weight": 0.3
+      },
+      {
+        "key": "execution",
+        "label": "Execution",
+        "score": 70,
+        "weight": 0.2
+      },
+      {
+        "key": "impact",
+        "label": "Impact & Results",
+        "score": 61,
+        "weight": 0.3
+      }
+    ],
+    "presages": [
+      {
+        "type": "aesthetic",
+        "kind": "favorable",
+        "title": "Polished Board",
+        "detail": "Readable composition, careful hierarchy.",
+        "malus_pct": 0
+      },
+      {
+        "type": "client",
+        "kind": "favorable",
+        "title": "International Client",
+        "detail": "Brand recognised beyond its borders.",
+        "malus_pct": 0
+      },
+      {
+        "type": "network",
+        "kind": "favorable",
+        "title": "Agency of the Inner Circle",
+        "detail": "IPG network — favorable presage.",
+        "malus_pct": 0
+      }
+    ],
+    "synthesis": "A memorable scientific reframe and a real product give it medal credibility, but the impact case is intent-survey heavy with no sales yet and largely Swedish earned coverage, which caps the jury read around Bronze."
+  },
+  "medal_prediction": {
+    "will_medal": true,
+    "medal_probability": 0.7566666666666667,
+    "threshold": 0.65,
+    "confidence": "medium",
+    "synthesis": "A memorable scientific reframe and a real product give it medal credibility, but the impact case is intent-survey heavy with no sales yet and largely Swedish earned coverage, which caps the jury read around Bronze."
+  },
+  "analysis": {
+    "id": "supercube-knorr-weber-shandwick-cologne",
+    "tier": "Loser",
+    "category": "PR",
+    "file_path": "2024/PR/SHORTLIST/Supercube - Knorr (Weber Shandwick, Cologne).webp",
+    "extracted": {
+      "campaign": "Supercube",
+      "brand": "Knorr",
+      "agencies": [],
+      "tagline": "You are not \"Picky\" You are a SUPERTASTER. And this is your Supercube",
+      "context": "Knorr's mission is to make healthy vegetables irresistible, but some people genuinely hate vegetables.",
+      "insight": "1 in 4 people are born with a \"supertaster\" gene (TAS2R38) that makes vegetables like broccoli, kale, spinach and cabbage taste extremely bitter — they aren't picky, they're biologically wired differently.",
+      "idea": "The Supercube — the first stock cube developed to reduce bitter flavours, and the first food product made specifically for supertasters, helping a quarter of the population enjoy a veggie-packed diet.",
+      "execution": [
+        "Neon 'Supertasters' branded environment / launch identity",
+        "Film showing supertasters (child, adult) reacting to bitter vegetables",
+        "Knorr Superkub product packaging (stock cube box)",
+        "Reframing messaging cards: 'You are not picky / difficult / awkward — you are a Supertaster'",
+        "Taste-test reaction content ('Oh my god, it was delicious!')",
+        "Earned media / news and daytime TV coverage"
+      ],
+      "metrics": [
+        "30,000+ Swedes tested for the gene",
+        "144 million total reach",
+        "70% of consumers would buy the Supercube",
+        "85% view Knorr as more innovative"
+      ],
+      "press_coverage": [
+        "Bohusläningen",
+        "Daily Mail",
+        "P4 Sveriges Radio",
+        "Göteborgs-Posten",
+        "ICAKuriren",
+        "Livets Goda"
+      ]
+    },
+    "inferred": {
+      "context": null,
+      "insight": null,
+      "idea": null,
+      "one_liner": "The first stock cube for supertasters.",
+      "creative_mechanisms": [
+        "purpose-driven-product",
+        "scientific-reframe",
+        "identity-relabeling"
+      ],
+      "qualitative_summary": "Reframed picky eaters as biologically distinct 'supertasters', destigmatising a quarter of the population and giving Knorr a new untapped product category set for retail launch in 2025."
+    },
+    "visual": {
+      "style_description": "Cinematic, warm-toned lifestyle photography paired with bold sans-serif headline typography and a radiating sunburst graphic behind the hero product. Case-study layout is clean and editorial with a filmstrip of supporting stills.",
+      "craft_quality": "high",
+      "dominant_colors": [
+        "beige",
+        "olive green",
+        "cream",
+        "silver"
+      ]
+    },
+    "review_flag": false,
+    "review_reasons": [],
+    "why_it_won": {
+      "idea": {
+        "score": 74,
+        "rationale": "Reframing 'picky eaters' as biologically distinct 'supertasters' via the TAS2R38 gene is a fresh, identity-relabeling hook with strong mnemonic potential, anchored to a tangible new product (the Supercube). It's more strategically rooted than a one-gag stunt like Heatsuit but less culturally explosive than Ketchup Fraud's category-defining frame."
+      },
+      "strategy": {
+        "score": 76,
+        "rationale": "Knorr's stated mission is making vegetables irresistible, and a product engineered to mask bitterness for 25% of the population is tightly coherent with that mission. The TAS2R38 gene is a real, verifiable scientific insight, and the destigmatising angle creates earned-media fuel. Strategy is on-brand and insight-led, comparable to Vaseline Transition in mission-fit."
+      },
+      "execution": {
+        "score": 70,
+        "rationale": "Cinematic film, neon identity, reframing cards and a real packaged product (Superkub) show coherent craft across owned/earned layers, plus 30,000 gene tests as a participatory mechanic. Press list is decent (Daily Mail, regional Swedish outlets) but skews mid-tier and Sweden-centric, not a global earned wave."
+      },
+      "impact": {
+        "score": 61,
+        "rationale": "144M reach and 30,000 gene tests are concrete, but '70% would buy' and '85% see Knorr as more innovative' are survey intent metrics, not sales — and the product only reaches shops in 2025, so no real business outcome yet. Mirrors the Vaseline/Heatsuit pattern of percentages without absolute commercial base."
+      },
+      "weighted_score": 69.8,
+      "verdict": "A genuinely original scientific reframe tied to a real product launch, but the impact case rests on intent surveys and reach rather than sales — placing it in Bronze territory alongside Vaseline Transition and Heatsuit, with upside to Silver if jury rewards the category-creating product.",
+      "tier_consistency": "n/a"
+    }
+  },
+  "base_weighted_score": 69.8,
+  "final_weighted_score": 69.8,
+  "predicted_tier": "Bronze",
+  "tier_probabilities": {
+    "Grand Prix": 0.016666666666666666,
+    "Gold": 0.10000000000000002,
+    "Silver": 0.24,
+    "Bronze": 0.4000000000000001,
+    "No Medal": 0.24333333333333332
+  },
+  "references": [
+    {
+      "id": "ketchup-fraud-heinz-ketchup-rethink-toronto",
+      "campaign": "Ketchup Fraud",
+      "brand": "Heinz",
+      "tier": "Gold",
+      "one_liner": "Refilling a Heinz bottle with another brand is fraud.",
+      "weighted_score": 81.0,
+      "similarity_score": 0.6527285575866699,
+      "verdict": "Lands Gold because a real, observable consumer suspicion is converted into a brand-owned crime ('Ketchup Fraud') that defends the exact equity Heinz sells on — proven by an 8% sales lift, not just a press wall."
+    },
+    {
+      "id": "transition-body-lotion-unilever-ogilvy-singapore",
+      "campaign": "Transition Body Lotion",
+      "brand": "Vaseline",
+      "tier": "Bronze",
+      "one_liner": "Gender equality in a 250ml bottle.",
+      "weighted_score": 61.6,
+      "similarity_score": 0.651892900466919,
+      "verdict": "Bronze because the product is genuinely category-first and on-mission for Vaseline, but every headline impact figure is a percentage without a stated base and the campaign architecture beyond launch is shallow."
+    },
+    {
+      "id": "snoop-goes-smokeless-solo-stove-the-martin-agency-richmond",
+      "campaign": "Snoop Goes Smokeless",
+      "brand": "Solo Stove",
+      "tier": "Bronze",
+      "one_liner": "Snoop quits smoke. (Then reveals: smokeless fire pits.)",
+      "weighted_score": 61.0,
+      "similarity_score": 0.6376890540122986,
+      "verdict": "Bronze because one ambiguous post genuinely hijacked a global cultural moment, but the impact case is a stack of percentage-and-impression claims with no absolute base and the longer-tail commercial outcome did not match the headlines."
+    },
+    {
+      "id": "seemingly-ranch-heinz-ketchup-rethink-toronto",
+      "campaign": "Seemingly Ranch",
+      "brand": "Heinz",
+      "tier": "Bronze",
+      "one_liner": "A viral Taylor Swift photo becomes a Heinz product overnight.",
+      "weighted_score": 71.3,
+      "similarity_score": 0.6257995367050171,
+      "verdict": "Bronze because the real-time hijack delivered fast, broad earned coverage and a permanent Walmart SKU, but the case is reactive opportunism with a 320% lift whose absolute baseline (Kranch was a flop) makes the headline percentage flattering."
+    },
+    {
+      "id": "heatsuit-domino-s-pizza-one-green-bean-london",
+      "campaign": "Heatsuit",
+      "brand": "Domino's Pizza",
+      "tier": "Bronze",
+      "one_liner": "The pizza heat bag becomes a wearable suit.",
+      "weighted_score": 59.8,
+      "similarity_score": 0.623298168182373,
+      "verdict": "Bronze because the stunt does exactly what a UK tabloid PR brief asks for — visual, on-brand, sales-shifting — but it is a single-gag activation with an unbased 18% sales claim rather than a strategic idea."
+    }
+  ],
+  "malus": {
+    "aesthetic_applied": false,
+    "client_applied": false,
+    "network_applied": false,
+    "detected_holding": "IPG",
+    "multiplier": 1.0,
+    "notes": [
+      "Network: agency belongs to IPG → no malus"
+    ]
+  },
+  "pass_scores": [
+    {
+      "idea": 76,
+      "strategy": 78,
+      "execution": 72,
+      "impact": 64
+    },
+    {
+      "idea": 74,
+      "strategy": 76,
+      "execution": 70,
+      "impact": 60
+    },
+    {
+      "idea": 72,
+      "strategy": 74,
+      "execution": 68,
+      "impact": 58
+    }
+  ],
+  "pass_probs": [
+    {
+      "Grand Prix": 0.02,
+      "Gold": 0.12,
+      "Silver": 0.28,
+      "Bronze": 0.38,
+      "No Medal": 0.2
+    },
+    {
+      "Grand Prix": 0.01,
+      "Gold": 0.08,
+      "Silver": 0.22,
+      "Bronze": 0.42,
+      "No Medal": 0.27
+    },
+    {
+      "Grand Prix": 0.02,
+      "Gold": 0.1,
+      "Silver": 0.22,
+      "Bronze": 0.4,
+      "No Medal": 0.26
+    }
+  ],
+  "pairwise": {},
+  "rigour_flags": []
+}

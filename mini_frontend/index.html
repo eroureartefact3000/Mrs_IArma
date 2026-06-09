@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mme Airma · La Voyante de Cannes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">Mme Airma</div>
+    <div class="brand-right"><em>La Voyante de Cannes</em></div>
+  </header>
+
+  <!-- Banner: this is a test UI, not the production front -->
+  <div class="banner">
+    Mini front de test &mdash; à remplacer par l'UI produit. <a href="/docs" target="_blank">Documentation API</a>
+  </div>
+
+  <main id="app">
+    <!-- View 1: Form -->
+    <section id="view-form" class="view active">
+      <h1>Confiez votre board à Mme Airma</h1>
+      <p class="subtitle">Renseignez les indices, et la voyante consultera les astres.</p>
+
+      <form id="evaluation-form">
+        <label>
+          <span class="label">Nom de la campagne</span>
+          <input type="text" name="campaign_name" required maxlength="200" placeholder="Ex&nbsp;: Phone Break">
+        </label>
+
+        <label>
+          <span class="label">Catégorie Cannes Lions</span>
+          <select name="category" required id="category-select">
+            <option value="">Chargement…</option>
+          </select>
+          <span class="hint" id="category-hint"></span>
+        </label>
+
+        <label>
+          <span class="label">Client</span>
+          <input type="text" name="client" required maxlength="200" placeholder="Ex&nbsp;: KitKat">
+        </label>
+
+        <label>
+          <span class="label">Client internationalement connu&nbsp;?</span>
+          <span class="radio-row">
+            <label class="radio"><input type="radio" name="client_internationally_known" value="true" checked> Oui</label>
+            <label class="radio"><input type="radio" name="client_internationally_known" value="false"> Non</label>
+          </span>
+        </label>
+
+        <label>
+          <span class="label">Agence</span>
+          <input type="text" name="agency" required maxlength="200" placeholder="Ex&nbsp;: VML Prague">
+        </label>
+
+        <label class="file-drop" id="file-drop">
+          <span class="label">Board (JPG · PNG · WEBP · AVIF, max 25&nbsp;Mo)</span>
+          <input type="file" name="image" id="image-input" accept=".jpg,.jpeg,.png,.webp,.avif,.gif" required>
+          <span class="file-name" id="file-name">Aucun fichier sélectionné</span>
+        </label>
+
+        <button type="submit" class="cta" id="submit-btn">Révéler mon destin</button>
+      </form>
+    </section>
+
+    <!-- View 2: Loading -->
+    <section id="view-loading" class="view">
+      <div class="loading-circle"></div>
+      <p class="loading-text"><em>Mme Airma consulte les astres…</em></p>
+      <p class="loading-sub">L'évaluation prend environ 45 secondes.</p>
+    </section>
+
+    <!-- View 3: Result -->
+    <section id="view-result" class="view">
+      <div id="result-card"></div>
+      <div class="actions">
+        <button class="cta-secondary" id="retry-btn">Consulter à nouveau</button>
+      </div>
+    </section>
+
+    <!-- View 4: Error -->
+    <section id="view-error" class="view">
+      <p class="error-text"><em>Les astres sont brouillés…</em></p>
+      <p id="error-detail" class="error-detail"></p>
+      <div class="actions">
+        <button class="cta-secondary" id="error-retry-btn">Réessayer</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

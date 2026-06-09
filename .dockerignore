@@ -1,0 +1,34 @@
+# Don't bake heavy / dev / secret content into the image
+.git/
+.github/
+.venv/
+__pycache__/
+*.pyc
+
+# Datasets (NOT needed at runtime — only by dev scripts)
+2024/
+2025/
+loser/
+design/
+
+# Dev artefacts
+data_internal/
+scripts/
+
+# Secrets
+.env
+.env.*
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+
+# Tests (kept out of image, run in CI)
+tests/
+
+# Local docs / build outputs
+*.docx
+*.html
+.pytest_cache/
+htmlcov/
