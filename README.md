@@ -73,10 +73,12 @@ curl -X POST http://localhost:8000/api/evaluate \
 
 ## Documentation
 
-- **[INTEGRATION.md](INTEGRATION.md)** — full integration guide for front-end and back-end developers
-- **[DOCUMENTATION.md](DOCUMENTATION.md)** — technical history of the project (methodology, calibration, decisions)
-- **[frontend/README.md](frontend/README.md)** — reference frontend (React + TS + Vite + Tailwind) handoff doc
-- **[data_internal/SYSTEM_CALIBRATION_NOTES.md](data_internal/SYSTEM_CALIBRATION_NOTES.md)** — calibration limits documented
+- **[PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md)**: non-engineering overview (goal, value, stack, milestones). Start here if you are in marketing or product.
+- **[INTEGRATION.md](INTEGRATION.md)**: full integration guide for front-end and back-end developers
+- **[HANDOFF.md](HANDOFF.md)**: one-pager for the deploy team
+- **[DOCUMENTATION.md](DOCUMENTATION.md)**: technical history of the project (methodology, calibration, decisions)
+- **[frontend/README.md](frontend/README.md)**: reference frontend (React + TS + Vite + Tailwind) handoff doc
+- **[data_internal/SYSTEM_CALIBRATION_NOTES.md](data_internal/SYSTEM_CALIBRATION_NOTES.md)**: calibration limits documented
 
 ## Repo structure
 
