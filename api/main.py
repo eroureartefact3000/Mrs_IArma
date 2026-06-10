@@ -54,11 +54,27 @@ def create_app() -> FastAPI:
     # Routes
     app.include_router(evaluation_router)
 
-    # Mini frontend (static HTML/JS served at /). Disable in pure-API deployments.
-    if s.serve_mini_frontend:
-        frontend_dir = Path(__file__).resolve().parent.parent / "mini_frontend"
-        if frontend_dir.exists():
-            app.mount("/", StaticFiles(directory=frontend_dir, html=True), name="mini_frontend")
+    # Static frontend (served at /). Disable for pure-API deployments where the
+    # frontend lives on a separate CDN. Preference order:
+    #   1. explicit FRONTEND_DIR env var (absolute or repo-relative path)
+    #   2. frontend/dist  → production React build (preferred)
+    #   3. mini_frontend  → legacy vanilla-JS smoke UI (fallback)
+    if s.serve_frontend:
+        repo_root = Path(__file__).resolve().parent.parent
+        candidates: list[Path] = []
+        if s.frontend_dir:
+            explicit = Path(s.frontend_dir)
+            candidates.append(explicit if explicit.is_absolute() else (repo_root / explicit))
+        candidates.append(repo_root / "frontend" / "dist")
+        candidates.append(repo_root / "mini_frontend")
+
+        for candidate in candidates:
+            if candidate.exists() and (candidate / "index.html").exists():
+                app.mount("/", StaticFiles(directory=candidate, html=True), name="frontend")
+                logging.getLogger("mrs_iarma.api").info(
+                    "static_frontend_mounted", extra={"path": str(candidate)}
+                )
+                break
 
     return app
 

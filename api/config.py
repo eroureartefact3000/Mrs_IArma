@@ -60,8 +60,15 @@ class Settings(BaseSettings):
     # --- Upload limits ---
     max_upload_mb: int = Field(default=25, ge=1, le=50)
 
-    # --- Mini frontend ---
-    serve_mini_frontend: bool = Field(default=True, description="Serve mini_frontend/ at /")
+    # --- Static frontend ---
+    # When True, FastAPI serves a static frontend bundle at /.
+    # Preference order: frontend/dist (production React build) → mini_frontend
+    # (legacy vanilla-JS smoke UI). Set to False for pure-API deployments
+    # where the frontend lives behind a separate CDN / hosting layer.
+    serve_frontend: bool = Field(default=True, description="Serve a static frontend at /")
+    # Optional explicit override (absolute or repo-relative path to the
+    # directory containing index.html). When empty, auto-detect.
+    frontend_dir: str = Field(default="", description="Path to the frontend dist directory (auto-detected when empty)")
 
     model_config = SettingsConfigDict(
         env_file=".env",

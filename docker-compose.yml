@@ -1,12 +1,13 @@
 # Mrs IArma — local dev composition.
 #
-# One container: the FastAPI service (with the mini frontend served at /).
+# One container: the FastAPI service with the React frontend (bundled at build
+# time into /app/frontend/dist) served at /.
 # No DB, no Redis — the engine is stateless. The integrating back-end team
 # will add their own DB / cache / queue around this container.
 #
 # Run with:
 #     docker compose up --build
-# Then open http://localhost:8000
+# Then open http://localhost:8000 (oracle) or http://localhost:8000/docs (OpenAPI).
 
 services:
   api:
@@ -34,6 +35,8 @@ services:
       RATE_LIMIT_PER_HOUR: "60"
       # Daily budget cap: 0 = unlimited. Set to e.g. 200 in prod for safety.
       DAILY_EVALUATION_CAP: "0"
+      # Serve the React bundle bundled in the image (/app/frontend/dist).
+      SERVE_FRONTEND: "true"
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request, sys; r=urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=3); sys.exit(0 if r.status == 200 else 1)"]
