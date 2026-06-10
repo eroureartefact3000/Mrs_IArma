@@ -49,11 +49,34 @@ export function FormWizard({ onSubmit }: FormWizardProps) {
   useEffect(() => {
     fetchCategories()
       .then((res) => {
-        const enabled = res.categories.filter((c) => c.enabled);
+        const FAMILY_ORDER = [
+          "Classic",
+          "Engagement",
+          "Craft",
+          "Experience",
+          "Entertainment",
+          "Health",
+          "Good",
+          "Strategy",
+          "Titanium",
+        ];
+        const familyRank = (f: string) => {
+          const i = FAMILY_ORDER.indexOf(f);
+          return i === -1 ? FAMILY_ORDER.length : i;
+        };
+        const enabled = res.categories
+          .filter((c) => c.enabled)
+          .sort((a, b) => {
+            const fa = familyRank(a.family) - familyRank(b.family);
+            return fa !== 0 ? fa : a.label.localeCompare(b.label);
+          });
         setCategories(enabled);
-        // Pre-select the first enabled category
-        if (enabled.length > 0 && !form.category) {
-          setForm((f) => ({ ...f, category: enabled[0].key }));
+        // Default to Outdoor (the most calibrated category) when available,
+        // otherwise the first enabled entry.
+        const defaultKey =
+          enabled.find((c) => c.key === "Outdoor")?.key ?? enabled[0]?.key;
+        if (defaultKey && !form.category) {
+          setForm((f) => ({ ...f, category: defaultKey }));
         }
       })
       .catch(() => {
