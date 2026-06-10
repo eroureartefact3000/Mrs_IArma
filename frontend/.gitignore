@@ -12,3 +12,6 @@ dist
 # Compiled vite config (TS source is the truth)
 vite.config.d.ts
 vite.config.js
+
+# Playwright screenshot output — regenerable via scripts/screenshot.mjs
+screenshots/

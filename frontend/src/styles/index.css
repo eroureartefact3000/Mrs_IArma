@@ -21,6 +21,12 @@
   ul {
     list-style: none;
   }
+
+  /* Inkify form controls so they match the brand (no browser-blue/pink). */
+  input[type="radio"],
+  input[type="checkbox"] {
+    accent-color: theme(colors.ink);
+  }
 }
 
 @layer components {
@@ -60,8 +66,11 @@
     opacity: 0.85;
   }
   .cta-primary:disabled {
-    opacity: 0.4;
+    /* Stay visually primary (per wireframe). Cursor signals you need to type first. */
     cursor: not-allowed;
+  }
+  .cta-primary:disabled:hover {
+    opacity: 1;
   }
 
   /* Secondary CTA — ghost outline */

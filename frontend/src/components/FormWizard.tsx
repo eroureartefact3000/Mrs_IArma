@@ -22,7 +22,6 @@ const STEPS: { key: StepKey; question: string; hint?: string }[] = [
   {
     key: "client",
     question: "Who is the client?",
-    hint: "We'll also ask if they're known beyond their home market.",
   },
   { key: "agency", question: "Which agency made the work?" },
   {
@@ -112,7 +111,7 @@ export function FormWizard({ onSubmit }: FormWizardProps) {
           <div className="label-caps mb-6">
             Question {stepIndex + 1} / {STEPS.length}
           </div>
-          <h1 className="editorial text-3xl md:text-4xl leading-tight mb-8 px-4">
+          <h1 className="editorial text-2xl md:text-3xl leading-tight mb-6 px-2">
             {currentStep.question}
           </h1>
 
@@ -126,7 +125,7 @@ export function FormWizard({ onSubmit }: FormWizardProps) {
               onKeyDown={handleKeyDown}
               maxLength={200}
               placeholder="Type your answer..."
-              className="w-full bg-transparent border-b border-ink text-center editorial text-2xl py-2 focus:outline-none placeholder:text-ink-faint placeholder:italic"
+              className="w-full bg-transparent border-b border-ink text-center editorial text-xl py-1.5 focus:outline-none placeholder:text-ink-faint placeholder:italic"
             />
           )}
 
@@ -157,26 +156,26 @@ export function FormWizard({ onSubmit }: FormWizardProps) {
                 onKeyDown={handleKeyDown}
                 maxLength={200}
                 placeholder="Type your answer..."
-                className="w-full bg-transparent border-b border-ink text-center editorial text-2xl py-2 focus:outline-none placeholder:text-ink-faint placeholder:italic"
+                className="w-full bg-transparent border-b border-ink text-center editorial text-xl py-1.5 focus:outline-none placeholder:text-ink-faint placeholder:italic"
               />
-              <div className="mt-6 flex items-center justify-center gap-6">
-                <label className="flex items-center gap-2 cursor-pointer">
+              <div className="mt-4 flex items-center justify-center gap-6">
+                <label className="flex items-center gap-2 cursor-pointer text-sm">
                   <input
                     type="radio"
                     name="intl"
                     checked={form.client_internationally_known}
                     onChange={() => setForm({ ...form, client_internationally_known: true })}
                   />
-                  <span className="text-sm">Internationally known</span>
+                  International
                 </label>
-                <label className="flex items-center gap-2 cursor-pointer">
+                <label className="flex items-center gap-2 cursor-pointer text-sm">
                   <input
                     type="radio"
                     name="intl"
                     checked={!form.client_internationally_known}
                     onChange={() => setForm({ ...form, client_internationally_known: false })}
                   />
-                  <span className="text-sm">Local / niche</span>
+                  Local
                 </label>
               </div>
             </>
@@ -191,7 +190,7 @@ export function FormWizard({ onSubmit }: FormWizardProps) {
               onKeyDown={handleKeyDown}
               maxLength={200}
               placeholder="Type your answer..."
-              className="w-full bg-transparent border-b border-ink text-center editorial text-2xl py-2 focus:outline-none placeholder:text-ink-faint placeholder:italic"
+              className="w-full bg-transparent border-b border-ink text-center editorial text-xl py-1.5 focus:outline-none placeholder:text-ink-faint placeholder:italic"
             />
           )}
 
@@ -201,12 +200,12 @@ export function FormWizard({ onSubmit }: FormWizardProps) {
               onChange={(file) => setForm({ ...form, image: file })}
             />
           )}
-
-          {currentStep.hint && (
-            <div className="label-caps mt-4">{currentStep.hint}</div>
-          )}
         </div>
       </SunRays>
+
+      {currentStep.hint && (
+        <div className="text-center label-caps mt-6">{currentStep.hint}</div>
+      )}
 
       {/* Step indicator + CTA */}
       <div className="flex flex-col items-center gap-4 mt-8">
