@@ -32,7 +32,7 @@ export function App() {
     } catch (err) {
       const message =
         err instanceof ApiError
-          ? `HTTP ${err.status} — ${err.message}`
+          ? `HTTP ${err.status}: ${err.message}`
           : err instanceof Error
             ? err.message
             : String(err);

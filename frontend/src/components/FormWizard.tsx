@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import type { CannesCategory, EvaluationFormState } from "../types";
 import { fetchCategories } from "../api";
 import { SunRays } from "./SunRays";
+import { CategoryDropdown } from "./CategoryDropdown";
 
 interface FormWizardProps {
   onSubmit: (form: EvaluationFormState) => void;
@@ -27,7 +28,7 @@ const STEPS: { key: StepKey; question: string; hint?: string }[] = [
   {
     key: "image",
     question: "Upload your board",
-    hint: "JPG · PNG · WEBP · AVIF — up to 25 MB",
+    hint: "JPG · PNG · WEBP · AVIF, up to 25 MB",
   },
 ];
 
@@ -130,20 +131,12 @@ export function FormWizard({ onSubmit }: FormWizardProps) {
           )}
 
           {currentStep.key === "category" && (
-            <select
-              ref={inputRef as unknown as React.RefObject<HTMLSelectElement>}
+            <CategoryDropdown
+              categories={categories}
               value={form.category}
-              onChange={(e) => setForm({ ...form, category: e.target.value })}
-              onKeyDown={handleKeyDown}
-              className="w-full bg-transparent border-b border-ink text-center editorial text-2xl py-2 focus:outline-none cursor-pointer"
-            >
-              {categories.length === 0 && <option value="">Loading...</option>}
-              {categories.map((cat) => (
-                <option key={cat.key} value={cat.key}>
-                  {cat.label}
-                </option>
-              ))}
-            </select>
+              onChange={(key) => setForm({ ...form, category: key })}
+              onConfirm={handleAdvance}
+            />
           )}
 
           {currentStep.key === "client" && (

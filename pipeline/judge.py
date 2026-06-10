@@ -81,12 +81,16 @@ _JUDGEMENT_TOOL = {
                 "type": "string",
                 "description": (
                     "WRITE IN ENGLISH. 1-2 short diagnostic sentences (max ~40 words total) EXPLAINING the prediction "
-                    "as a post-mortem observation — boards have already been submitted to the jury, so DO NOT suggest "
-                    "fixes or improvements. The tone is that of a jury post-deliberation note: what the board does well "
+                    "as a post-mortem observation, since boards have already been submitted to the jury. "
+                    "DO NOT suggest fixes or improvements. "
+                    "The tone is that of a jury post-deliberation note: what the board does well "
                     "and what limits it, framed as observation, not advice. "
-                    "Example: 'Memorable idea and clean execution, but the impact proof is too thin — "
+                    "Example: 'Memorable idea and clean execution, but the impact proof is too thin: "
                     "the cited percentages are not anchored to absolute bases, which caps the jury read.' "
-                    "AVOID imperative verbs like 'Add', 'Strengthen', 'Specify' — use descriptive language instead."
+                    "AVOID imperative verbs like 'Add', 'Strengthen', 'Specify'. Use descriptive language instead. "
+                    "FORBIDDEN PUNCTUATION: do not use em dashes (—) or en dashes (–). "
+                    "Use commas, semicolons, colons, or periods instead. "
+                    "FORBIDDEN STYLISTIC TICS: avoid 'It's not just X, it's Y' constructions and similar AI-sounding patterns."
                 ),
             },
         },

@@ -120,7 +120,7 @@ PRESAGE_AESTHETIC_FAV = (
 )
 PRESAGE_AESTHETIC_UNFAV = (
     "Off-Standard Board",
-    "Composition needs reworking — −10%.",
+    "Composition needs reworking.",
 )
 PRESAGE_CLIENT_FAV = (
     "International Client",
@@ -128,15 +128,15 @@ PRESAGE_CLIENT_FAV = (
 )
 PRESAGE_CLIENT_UNFAV = (
     "Confidential Client",
-    "Local presence only — −20%.",
+    "Local presence only.",
 )
 PRESAGE_NETWORK_FAV_TEMPLATE = (
     "Agency of the Inner Circle",
-    "{holding} network — favorable presage.",
+    "{holding} network. A favorable presage.",
 )
 PRESAGE_NETWORK_UNFAV = (
     "Agency Outside the Circle",
-    "Outside Publicis · Havas · Omnicom · WPP · IPG · Dentsu — −20%.",
+    "Outside Publicis, Havas, Omnicom, WPP, IPG or Dentsu.",
 )
 
 

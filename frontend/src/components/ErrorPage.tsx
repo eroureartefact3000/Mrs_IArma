@@ -6,11 +6,11 @@ interface Props {
 }
 
 const CAUSES = [
-  "Unsupported format — JPG, PNG, WEBP, AVIF or GIF only",
-  "File too large — 25 MB maximum",
-  "Out-of-range dimensions — up to ~7000 × 5000 px recommended",
-  "Corrupt or unreadable file",
-  "Backend offline or rate-limited",
+  "Unsupported format. JPG, PNG, WEBP, AVIF or GIF only.",
+  "File too large. 25 MB maximum.",
+  "Out-of-range dimensions. Up to about 7000 × 5000 px recommended.",
+  "Corrupt or unreadable file.",
+  "Backend offline or rate-limited.",
 ];
 
 export function ErrorPage({ message, onRetry }: Props) {

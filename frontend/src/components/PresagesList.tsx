@@ -29,7 +29,7 @@ export function PresagesList({ presages }: Props) {
               <span className="text-sm text-ink-soft">
                 {p.detail}
                 {p.malus_pct > 0 && (
-                  <span className="text-ink-faint"> — −{p.malus_pct}%</span>
+                  <span className="text-ink-faint"> (−{p.malus_pct}%)</span>
                 )}
               </span>
             </div>
