@@ -3,7 +3,7 @@
 Endpoints:
     POST /api/evaluate     — multipart upload + metadata → BoardEvaluation JSON
     GET  /api/health       — liveness + index loaded check
-    GET  /api/categories   — list of supported Cannes Lions categories (Outdoor only for MVP)
+    GET  /api/categories   — list of supported Cannes Lions categories (30 enabled)
 
 The route handlers are intentionally thin: they validate inputs, hand off to
 `pipeline.evaluate_board`, and serialize the result. All business logic lives
@@ -122,7 +122,7 @@ async def evaluate(
     campaign_name: str = Form(..., min_length=1, max_length=200),
     agency: str = Form(..., min_length=1, max_length=200),
     client: str = Form(..., min_length=1, max_length=200),
-    category: str = Form("Outdoor", description="Cannes Lions category. Only 'Outdoor' is functional in MVP."),
+    category: str = Form("Outdoor", description="Cannes Lions category. See GET /api/categories for the live list of enabled categories."),
     client_internationally_known: bool = Form(True),
 ) -> JSONResponse:
     """End-to-end evaluation of a board."""

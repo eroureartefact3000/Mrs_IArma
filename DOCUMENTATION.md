@@ -2,7 +2,10 @@
 
 > Outil IA de prédiction "Ce projet pub va-t-il gagner un Cannes Lions ?"
 > Projet Artefact 3000 · Lead tech : Etienne Roure
-> Dernière mise à jour : 2026-05-29
+> Dernière mise à jour : 2026-06-10
+>
+> Branding runtime (frontend) : **« Mrs Airma · The Cannes Oracle »** (anglais, ton oraculaire).
+> Toute sortie destinée à l'utilisateur (verdict, présages, synthèse, axes) est en anglais. Cette documentation reste en français car elle s'adresse à l'équipe interne.
 
 ## Sommaire
 
@@ -30,11 +33,13 @@ Une directrice artistique d'Artefact 3000 souhaite un outil ludique de prédicti
 - **Pour l'agence** : outil marketing visible à l'international, démonstration de notre maîtrise de l'IA générative.
 - **Pour les créatifs du monde entier** : feedback structuré et instantané sur la "Cannes-ability" de leur travail, avec des références concrètes (gagnants des années précédentes les plus similaires).
 
-### Le périmètre MVP
+### Le périmètre couvert
 
-- **Une catégorie** Cannes Lions : **Outdoor** (boards visuelles, 53 winners + 65 shortlist + 2 losers en 2024).
-- **Méthodologie déjà validée** par la directrice artistique sur 2 itérations de review (mai 2026).
-- **Extension** vers d'autres catégories prévue après MVP.
+- **30 catégories** Cannes Lions 2026 activées de bout en bout (criteria + RAG index + rationales) :
+  Outdoor · Print & Publishing · Audio & Radio · Film · PR · Direct · Media · Social & Influencer · Creative B2B · Creative Data · Design · Industry Craft · Digital Craft · Film Craft · Brand Experience & Activation · Creative Commerce · Creative Business Transformation · Innovation · Luxury · Entertainment · Entertainment Lions for Sport · Entertainment for Gaming · Entertainment for Music · Health & Wellness · Pharma · Sustainable Development Goals · Glass (The Lion for Change) · Creative Strategy · Creative Effectiveness · Titanium.
+- **Base RAG** : 1466 boards extraites, 604 gagnantes (avec rationales générées) servant de références.
+- **Calibration formelle** sur Outdoor (n=10, ~80% binaire) et PR (n=20, ~75% binaire). Les 28 autres catégories ont été testées end-to-end (smoke tests) mais n'ont pas fait l'objet d'une calibration formelle sur held-out.
+- **Méthodologie validée** par la directrice artistique sur Outdoor (mai 2026), généralisée aux autres catégories via des briefs MECE par catégorie (`agent_briefs/categories/{SLUG}.md`).
 
 ---
 
@@ -409,9 +414,11 @@ Loser       → [67.4, 70.4]   (clean separation vs autres tiers)
 
 **Lecture** : avec 80% binaire on s'approche de la cible 85% sans toucher à l'architecture. Pour gratter les 5 derniers points il faudrait probablement enrichir le signal d'entrée (case film) ou ajouter une couche ML supervisée — chantiers significatifs.
 
+> **Limites de calibration system-wide** : la même méthodologie a été poussée sur PR (80% → ~75% binaire sur n=20) et Print & Publishing (~60% binaire sur n=10). Le palier observé n'est pas un bug ; c'est une limite intrinsèque du LLM-judge qui compresse les scores pondérés dans la bande 65-85 et discrimine mal à l'intérieur. Détails et bornes documentés dans `data_internal/SYSTEM_CALIBRATION_NOTES.md`, `data_internal/PR_CALIBRATION_NOTES.md`, `data_internal/PRINT_CALIBRATION_NOTES.md`.
+
 #### Piste différée : couche ML supervisée au-dessus du LLM-judge
 
-Documenté ici pour reprise future. Décision 2026-06-01 : **on accepte 80% binaire pour le MVP** et on enchaîne sur le front-end. Cette piste sera reprise si la précision devient insuffisante en production.
+Documenté ici pour reprise future. Décision 2026-06-01 : **on accepte ~75-80% binaire** sur les catégories formellement calibrées et on enchaîne sur le front-end. Cette piste sera reprise si la précision devient insuffisante en production.
 
 **Principe** : un petit modèle classique (Random Forest binaire visé) prend en entrée les ~25-30 features produites par le LLM-judge (axis_scores, tier_probabilities, malus, RAG metadata, features visuelles) et prédit `is_medal` (0/1) en apprenant le biais systématique du LLM.
 
@@ -426,7 +433,7 @@ Documenté ici pour reprise future. Décision 2026-06-01 : **on accepte 80% bina
 
 **Gain attendu** : 80% → 85-90% binary accuracy + meilleure calibration des probabilités affichables.
 
-**À mettre en œuvre quand** : si le retour utilisateur post-MVP montre que la précision 80% n'est pas suffisante, OU si on veut afficher P(medal) comme un vrai pourcentage de confiance (besoin de probabilités calibrées).
+**À mettre en œuvre quand** : si le retour utilisateur montre que la précision actuelle n'est pas suffisante, OU si on veut afficher P(medal) comme un vrai pourcentage de confiance (besoin de probabilités calibrées).
 
 ---
 
@@ -491,8 +498,8 @@ Mrs_IArma/
 │   │   ├── SILVER/                 (15 boards)
 │   │   ├── BRONZE/                 (27 boards)
 │   │   └── SHORTLIST/              (65 boards)
-│   ├── PR/                         (115 boards si on switch catégorie)
-│   ├── ... (32 catégories total)
+│   ├── PR/                         (115 boards)
+│   ├── PRINT&PUBLISHING/, FILM/, DESIGN/, … (30 catégories Cannes Lions 2026, toutes activées)
 │   └── loser/                      (4 boards perdantes manuelle)
 │
 ├── 2025/                           ← dataset 2025, par tier mixé (utilisé pour PR v1)
@@ -504,13 +511,13 @@ Mrs_IArma/
 ├── pipeline/                       ← code de prod
 │   ├── __init__.py
 │   ├── schema.py                   ← Pydantic models (Extracted, Inferred, Visual, WhyItWon, BoardAnalysis)
-│   ├── images.py                   ← Loader image avec resize + détection format
-│   ├── client.py                   ← Wrapper Anthropic SDK
+│   ├── images.py                   ← Loader image/PDF avec resize + détection format (PDF natif via Claude document block)
+│   ├── client.py                   ← Wrapper Anthropic SDK + helper build_media_block (image/document)
 │   ├── classifier.py               ← Pré-classification famille Cannes (utilisé si dataset non trié)
 │   ├── extractor.py                ← Extraction 2-pass + impact_strength + flag_for_review
 │   ├── rationale.py                ← Générateur why-it-won (DA mental model + RIGOUR)
-│   ├── pr_criteria.py              ← Critères PR (20/30/20/30)
-│   ├── outdoor_criteria.py         ← Critères Outdoor (35/10/30/25)
+│   ├── category_registry.py        ← Registre central des 30 catégories (criteria + index lazy-loaded)
+│   ├── {slug}_criteria.py          ← 30 modules de critères (un par catégorie), poids d'axes spécifiques
 │   ├── search_doc.py               ← Construction du search document par board
 │   ├── embeddings.py               ← Wrapper Voyage AI
 │   └── search.py                   ← API de recherche vectorielle
@@ -601,16 +608,17 @@ uv run python scripts/extract_2024_outdoor.py --limit 5 --workers 4
 - [x] **Phase 2 — Moteur d'évaluation** : extract → RAG → multi-pass judge → malus → tier prédit. ~$0.90, ~45s par évaluation. Testé sur KitKat Phone Break 2025 GP.
 - [x] **Phase 3 — Calibration** sur 10 boards (2 losers + 5 hold-out 2024 + 3 fresh 2025). Extension malus à 6 holdings (Publicis/Havas/Omnicom + WPP/IPG/Dentsu). Prompt judge renforcé avec calibration anchors 0-100 + native-to-category check.
 - [x] **Phase 3.5 — Pivot binaire (medal vs no medal)** : refactor judge.py vers `tool_use` API (élimine JSON parse errors), output `MedalPrediction` (will_medal + P(medal) + confidence + synthesis 1-2 phrases). RAG enrichi 5 winners + 2 non-winners pour casser le biais "tout est medal". **Binary accuracy : 60% → 80%** (threshold 0.65). Gap P(No Medal) entre losers et medals : +0.16 (vs +0.08 avant).
-- [x] **Phase 4 — Chantier 1 : couche présentation Mme Airma** : nouveau `TierPrediction` comme primary output (tier FR + score % + confidence + verdict mystique + 4 axes FR + 3 présages structurés + synthèse diagnostique). `MedalPrediction` conservé pour usage interne. Synthèse forcée en français et reformulée en **post-mortem diagnostique** (boards déjà soumises au jury 2026 → tips d'amélioration retirés, ton observationnel uniquement). Pondération Outdoor alignée sur entry kit (35/10/30/25).
+- [x] **Phase 4 — Chantier 1 : couche présentation Mme Airma** : nouveau `TierPrediction` comme primary output (tier + score % + confidence + verdict oraculaire + 4 axes + 3 présages structurés + synthèse diagnostique). `MedalPrediction` conservé pour usage interne. Synthèse reformulée en **post-mortem diagnostique** (boards déjà soumises au jury 2026 → tips d'amélioration retirés, ton observationnel uniquement). Pondération Outdoor alignée sur entry kit (35/10/30/25).
+- [x] **Phase 4.5 — Bascule langue de sortie : français → anglais oraculaire** : tous les outputs runtime (tier_label, axes labels, mystic_verdict, presages, synthesis) passés en anglais sous la marque "Mrs Airma · The Cannes Oracle". Em dashes (—) explicitement bannis du prompt synthèse (rendu trop « IA »). Renommage des champs `*_fr` → version sans suffixe (`AxisScoreFr` → `AxisScore`, etc.).
+- [x] **Phase 5 — Extension à 30 catégories** : généralisation de la méthodologie Outdoor à 29 autres catégories Cannes Lions 2026. Pour chaque catégorie : (1) brief MECE auto-suffisant (`agent_briefs/categories/{SLUG}.md`), (2) module `{slug}_criteria.py` avec pondération d'axes spécifique au métier, (3) extraction des boards source via subagents Claude Code (subscription, $0 API), (4) génération des rationales why-it-won, (5) RAG index `{slug}_index.npy` + meta. Registre central dans `pipeline/category_registry.py` qui lazy-load les indexes. Calibration formelle limitée à Outdoor et PR ; les 28 autres catégories sont smoke-tested.
+- [x] **Phase 5.5 — PDF natif** : support des PDF (cases studies multi-pages) via le content block `document` de l'API Claude. Magic header `%PDF-` détecté dans `pipeline/images.py`, helper `build_media_block()` dans `pipeline/client.py` aiguille vers `image` ou `document`. Pas de conversion préalable.
+- [x] **Phase 6 — Frontend de référence** : React 18 + TypeScript + Vite 5 + Tailwind 3, design system « Mrs Airma · The Cannes Oracle » (SunRays motif, dropdown custom, 5-step wizard, mocks Playwright pour itération visuelle). Branding et copy en anglais, sans em dashes.
 
-### ⏳ En cours / à venir
-  - Pipeline `evaluate_new_board(image_path) → BoardAnalysis + tier prediction`
-  - Combine extraction + RAG top-5 + LLM-juge avec contexte
-- [ ] **Phase 3** : calibration sur le hold-out (2 losers + non-gagnantes additionnelles)
-- [ ] **Phase 4** : front-end Next.js
-  - Upload de board
-  - Affichage du résultat (tier + axes + références gagnantes similaires)
-- [ ] **Phase 5** : extension à d'autres catégories (PR, Health, Direct…)
+### ⏳ À venir
+- [ ] **Dockerfile multi-stage** (build frontend → serve via FastAPI ou via Firebase Hosting + Cloud Run).
+- [ ] **Mise à jour du dropdown frontend** pour exposer les 30 catégories.
+- [ ] **Calibration formelle** étendue à d'autres catégories (priorité : Film, Design, Social, Innovation) si retour DA le demande.
+- [ ] **Couche ML supervisée** au-dessus du LLM-judge (cf. § Phase 3.5) — différée tant que ~75-80% binaire suffit.
 
 ---
 
