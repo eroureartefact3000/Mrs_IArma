@@ -17,7 +17,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
-# Map registry key → source folder under 2024/  (case-sensitive on disk)
+# Map registry key → source folder under 2024/  (case-sensitive on disk).
+# Note: "CREATIVE DATA " on disk has a trailing space.
 CATEGORY_DIRS: dict[str, str] = {
     "Outdoor": "OUTDOOR",
     "PR": "PR",
@@ -34,6 +35,22 @@ CATEGORY_DIRS: dict[str, str] = {
     "Social & Influencer": "SOCIAL & INFLUENCER",
     "Film": "FILM",
     "Creative Strategy": "CREATIVE STRATEGY",
+    # Wave 2 — remaining 15 categories
+    "Audio & Radio": "AUDIO&RADIO",
+    "Digital Craft": "DIGITAL CRAFT",
+    "Film Craft": "FILM CRAFT",
+    "Creative B2B": "CREATIVE B2B",
+    "Creative Data": "CREATIVE DATA",
+    "Creative Commerce": "CREATIVE COMMERCE",
+    "Creative Effectiveness": "CREATIVE EFFECTIVENESS",
+    "Entertainment for Gaming": "ENTERTAINMENT LIONS FOR GAMING",
+    "Entertainment for Music": "ENTERTAINMENT LIONS FOR MUSIC",
+    "Creative Business Transformation": "CREATIVE BUSINESS TRANSFORMATION",
+    "Innovation": "INNOVATION",
+    "Luxury": "LUXURY & LIFESTYLE",
+    "Glass (The Lion for Change)": "GLASS - THE LION FOR CHANGE",
+    "Pharma": "PHARMA",
+    "Titanium": "TITANIUM",
 }
 
 
@@ -54,6 +71,22 @@ CATEGORY_SLUG: dict[str, str] = {
     "Social & Influencer": "social",
     "Film": "film",
     "Creative Strategy": "creative_strategy",
+    # Wave 2
+    "Audio & Radio": "audio_radio",
+    "Digital Craft": "digital_craft",
+    "Film Craft": "film_craft",
+    "Creative B2B": "creative_b2b",
+    "Creative Data": "creative_data",
+    "Creative Commerce": "creative_commerce",
+    "Creative Effectiveness": "creative_effectiveness",
+    "Entertainment for Gaming": "ent_gaming",
+    "Entertainment for Music": "ent_music",
+    "Creative Business Transformation": "creative_bt",
+    "Innovation": "innovation",
+    "Luxury": "luxury",
+    "Glass (The Lion for Change)": "glass",
+    "Pharma": "pharma",
+    "Titanium": "titanium",
 }
 
 

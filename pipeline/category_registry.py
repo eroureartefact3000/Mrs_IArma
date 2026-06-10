@@ -489,47 +489,61 @@ def _bootstrap() -> None:
             )
         )
 
-    # --- Placeholders for all the other Cannes Lions categories --------------
-    # These are registered as `enabled=False`. They show up in the API listing
-    # so the UI can render the dropdown with "coming soon" affordances, but
-    # they reject any evaluation attempt.
-    placeholders: list[tuple[str, str, str]] = [
-        # (key, label, family)
-        ("Creative Brand", "Creative Brand", "Brand"),
-        ("Audio & Radio", "Audio & Radio", "Classic"),
-        ("Film", "Film", "Classic"),
-        ("Print & Publishing", "Print & Publishing", "Classic"),
-        ("Design", "Design", "Craft"),
-        ("Digital Craft", "Digital Craft", "Craft"),
-        ("Film Craft", "Film Craft", "Craft"),
-        ("Industry Craft", "Industry Craft", "Craft"),
-        ("Creative B2B", "Creative B2B", "Engagement"),
-        ("Creative Data", "Creative Data", "Engagement"),
-        ("Direct", "Direct", "Engagement"),
-        ("Media", "Media", "Engagement"),
-        ("PR", "PR", "Engagement"),
-        ("Social & Creator", "Social & Creator", "Engagement"),
-        ("Entertainment", "Entertainment", "Entertainment"),
-        ("Entertainment for Gaming", "Entertainment for Gaming", "Entertainment"),
-        ("Entertainment for Music", "Entertainment for Music", "Entertainment"),
-        ("Entertainment for Sport", "Entertainment for Sport", "Entertainment"),
-        ("Brand Experience & Activation", "Brand Experience & Activation", "Experience"),
-        ("Creative Business Transformation", "Creative Business Transformation", "Experience"),
-        ("Creative Commerce", "Creative Commerce", "Experience"),
-        ("Innovation", "Innovation", "Experience"),
-        ("Luxury", "Luxury & Lifestyle", "Experience"),
-        ("Glass (The Lion for Change)", "Glass · The Lion for Change", "Good"),
-        ("Sustainable Development Goals", "Sustainable Development Goals", "Good"),
-        ("Health & Wellness", "Health & Wellness", "Health"),
-        ("Pharma", "Pharma", "Health"),
-        ("Creative Effectiveness", "Creative Effectiveness", "Strategy"),
-        ("Creative Strategy", "Creative Strategy", "Strategy"),
-        ("Titanium", "Titanium", "Titanium"),
+    # --- Wave 2 categories (15 additional, all share the standard tier bands) ----
+    # All are conditional on their respective index files existing on disk.
+    _STD_BANDS = {
+        "Grand Prix": (90, 100),
+        "Gold": (80, 100),
+        "Silver": (65, 80),
+        "Bronze": (50, 65),
+    }
+
+    _wave2_specs: list[tuple[str, str, str, str, str]] = [
+        # (key, label, family, slug, criteria_module:CRITERIA_NAME)
+        ("Audio & Radio", "Audio & Radio", "Classic", "audio_radio", "audio_radio_criteria:AUDIO_RADIO_CRITERIA"),
+        ("Digital Craft", "Digital Craft", "Craft", "digital_craft", "digital_craft_criteria:DIGITAL_CRAFT_CRITERIA"),
+        ("Film Craft", "Film Craft", "Craft", "film_craft", "film_craft_criteria:FILM_CRAFT_CRITERIA"),
+        ("Creative B2B", "Creative B2B", "Engagement", "creative_b2b", "creative_b2b_criteria:CREATIVE_B2B_CRITERIA"),
+        ("Creative Data", "Creative Data", "Engagement", "creative_data", "creative_data_criteria:CREATIVE_DATA_CRITERIA"),
+        ("Creative Commerce", "Creative Commerce", "Experience", "creative_commerce", "creative_commerce_criteria:CREATIVE_COMMERCE_CRITERIA"),
+        ("Creative Effectiveness", "Creative Effectiveness", "Strategy", "creative_effectiveness", "creative_effectiveness_criteria:CREATIVE_EFFECTIVENESS_CRITERIA"),
+        ("Entertainment for Gaming", "Entertainment for Gaming", "Entertainment", "ent_gaming", "ent_gaming_criteria:ENT_GAMING_CRITERIA"),
+        ("Entertainment for Music", "Entertainment for Music", "Entertainment", "ent_music", "ent_music_criteria:ENT_MUSIC_CRITERIA"),
+        ("Creative Business Transformation", "Creative Business Transformation", "Experience", "creative_bt", "creative_bt_criteria:CREATIVE_BT_CRITERIA"),
+        ("Innovation", "Innovation", "Experience", "innovation", "innovation_criteria:INNOVATION_CRITERIA"),
+        ("Luxury", "Luxury & Lifestyle", "Experience", "luxury", "luxury_criteria:LUXURY_CRITERIA"),
+        ("Glass (The Lion for Change)", "Glass · The Lion for Change", "Good", "glass", "glass_criteria:GLASS_CRITERIA"),
+        ("Pharma", "Pharma", "Health", "pharma", "pharma_criteria:PHARMA_CRITERIA"),
+        ("Titanium", "Titanium", "Titanium", "titanium", "titanium_criteria:TITANIUM_CRITERIA"),
     ]
-    for key, label, family in placeholders:
-        if key in _REGISTRY:
-            continue  # already registered as enabled above
-        register_category(CategoryConfig(key=key, label=label, family=family, enabled=False))
+
+    for key, label, family, slug, criteria_spec in _wave2_specs:
+        index_path = _DATA_DIR / f"{slug}_index.npy"
+        meta_path = _DATA_DIR / f"{slug}_index_meta.jsonl"
+        if not (index_path.exists() and meta_path.exists()):
+            continue
+        module_name, criteria_name = criteria_spec.split(":")
+        try:
+            module = __import__(f"pipeline.{module_name}", fromlist=[criteria_name])
+            criteria = getattr(module, criteria_name)
+        except (ImportError, AttributeError):
+            continue
+        register_category(
+            CategoryConfig(
+                key=key,
+                label=label,
+                family=family,
+                enabled=True,
+                criteria=criteria,
+                index_path=index_path,
+                meta_path=meta_path,
+                tier_bands=_STD_BANDS,
+            )
+        )
+
+    # All 30 Cannes Lions 2026 entry categories are wired above. No placeholders
+    # are needed. If a new category is introduced in a future entry kit, add it
+    # here following the same pattern.
 
 
 _bootstrap()

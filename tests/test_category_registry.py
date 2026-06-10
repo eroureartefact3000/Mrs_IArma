@@ -1,12 +1,27 @@
 """Smoke tests for the category registry.
 
 These tests don't hit external APIs. They verify the registry bootstraps
-correctly, knows Outdoor is enabled, and raises clean errors for unknown /
-not-enabled categories.
+correctly with all 30 enabled Cannes Lions 2026 categories and raises clean
+errors for unknown categories.
 """
 from __future__ import annotations
 
 import pytest
+
+
+# A spot-check of canonical category keys that must be enabled in every build.
+_ENABLED_SAMPLE = {
+    "Outdoor",
+    "PR",
+    "Film",
+    "Print & Publishing",
+    "Health & Wellness",
+    "Innovation",
+    "Creative Strategy",
+    "Titanium",
+    "Design",
+    "Glass (The Lion for Change)",
+}
 
 
 def test_registry_has_outdoor_enabled():
@@ -21,22 +36,17 @@ def test_registry_has_outdoor_enabled():
     assert cfg.family == "Classic"
 
 
-def test_registry_lists_at_least_30_categories():
-    from pipeline.category_registry import list_categories
+def test_registry_has_thirty_enabled_categories():
+    """All 30 Cannes Lions 2026 entry categories must be enabled."""
+    from pipeline.category_registry import list_categories, list_enabled_keys
 
     cats = list_categories()
-    assert len(cats) >= 30
-    keys = {c.key for c in cats}
-    # Spot-check a few canonical categories
-    for k in ["Outdoor", "PR", "Film", "Health & Wellness", "Innovation"]:
-        assert k in keys
-
-
-def test_registry_only_outdoor_is_enabled_in_mvp():
-    """The MVP exposes Outdoor as the only enabled category."""
-    from pipeline.category_registry import list_enabled_keys
-
-    assert list_enabled_keys() == {"Outdoor"}
+    assert len(cats) == 30
+    enabled = list_enabled_keys()
+    assert len(enabled) == 30
+    # Every spot-checked category must be enabled
+    missing = _ENABLED_SAMPLE - enabled
+    assert not missing, f"expected enabled but missing: {missing}"
 
 
 def test_unknown_category_raises_unknown():
@@ -46,15 +56,16 @@ def test_unknown_category_raises_unknown():
         get_category("NotARealCategory")
 
 
-def test_disabled_category_raises_not_enabled():
-    """`PR` is registered as a placeholder but not enabled — require_enabled_category should reject it."""
+def test_require_enabled_passes_for_each_registered_category():
+    """`require_enabled_category` should pass for every entry in the registry."""
     from pipeline.category_registry import (
-        CategoryNotEnabled,
+        list_enabled_keys,
         require_enabled_category,
     )
 
-    with pytest.raises(CategoryNotEnabled):
-        require_enabled_category("PR")
+    for key in list_enabled_keys():
+        cfg = require_enabled_category(key)
+        assert cfg.enabled is True
 
 
 def test_outdoor_passes_require_enabled():
