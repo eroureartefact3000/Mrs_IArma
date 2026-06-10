@@ -62,3 +62,16 @@ data_internal/
 # Anthropic / Voyage cached responses (if any)
 # ============================================================
 .cache/
+
+# ============================================================
+# Claude Code local session state (not project content)
+# ============================================================
+.claude/
+
+# ============================================================
+# Frontend dev artefacts (rebuilt by Vite / pnpm)
+# ============================================================
+frontend/node_modules/
+frontend/dist/
+frontend/screenshots/
+frontend/*.tsbuildinfo
