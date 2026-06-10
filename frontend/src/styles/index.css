@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body {
+    background: theme(colors.cream);
+    color: theme(colors.ink);
+    font-family: theme(fontFamily.sans);
+    /* Subtle paper texture — slight noise to mimic the wireframe's cream stock */
+    background-image: radial-gradient(
+      circle at 25% 30%,
+      rgba(0, 0, 0, 0.015) 1px,
+      transparent 1px
+    );
+    background-size: 3px 3px;
+  }
+
+  /* Reset default list styling we don't need */
+  ul {
+    list-style: none;
+  }
+}
+
+@layer components {
+  /* Editorial italic figure — used for tier name, score percent, mystic verdict */
+  .editorial {
+    font-family: theme(fontFamily.serif);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  /* Small-caps label — used for "DETAILED READING OF THE STARS", "POSSIBLE CAUSES", etc. */
+  .label-caps {
+    font-family: theme(fontFamily.sans);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: theme(letterSpacing.wide);
+    text-transform: uppercase;
+    color: theme(colors.ink-soft);
+  }
+
+  /* Primary CTA — solid black pill */
+  .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: theme(colors.ink);
+    color: theme(colors.cream);
+    padding: 0.85rem 2.5rem;
+    font-family: theme(fontFamily.sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: theme(letterSpacing.wide);
+    text-transform: uppercase;
+    transition: opacity 150ms ease;
+  }
+  .cta-primary:hover {
+    opacity: 0.85;
+  }
+  .cta-primary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* Secondary CTA — ghost outline */
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: theme(colors.ink);
+    border: 1px solid theme(colors.ink);
+    padding: 0.85rem 2.5rem;
+    font-family: theme(fontFamily.sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: background 150ms ease;
+  }
+  .cta-secondary:hover {
+    background: theme(colors.ink);
+    color: theme(colors.cream);
+  }
+}
