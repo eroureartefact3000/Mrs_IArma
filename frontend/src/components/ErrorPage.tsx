@@ -6,7 +6,7 @@ interface Props {
 }
 
 const CAUSES = [
-  "Unsupported format. JPG, PNG, WEBP, AVIF or GIF only.",
+  "Unsupported format. JPG, PNG, WEBP, AVIF, GIF or PDF only.",
   "File too large. 25 MB maximum.",
   "Out-of-range dimensions. Up to about 7000 × 5000 px recommended.",
   "Corrupt or unreadable file.",

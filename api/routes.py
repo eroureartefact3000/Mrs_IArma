@@ -89,7 +89,7 @@ def categories() -> dict[str, Any]:
 # ----------------------------------------------------------------------------
 
 
-_ALLOWED_EXTS = {".jpg", ".jpeg", ".png", ".webp", ".avif", ".gif"}
+_ALLOWED_EXTS = {".jpg", ".jpeg", ".png", ".webp", ".avif", ".gif", ".pdf"}
 
 
 def _validate_upload(image: UploadFile) -> None:
@@ -118,7 +118,7 @@ def _validate_upload(image: UploadFile) -> None:
 )
 async def evaluate(
     request: Request,
-    image: UploadFile = File(..., description="Board image (jpg/png/webp/avif/gif). Max 25 MB."),
+    image: UploadFile = File(..., description="Board file (jpg/png/webp/avif/gif/pdf). Max 25 MB."),
     campaign_name: str = Form(..., min_length=1, max_length=200),
     agency: str = Form(..., min_length=1, max_length=200),
     client: str = Form(..., min_length=1, max_length=200),

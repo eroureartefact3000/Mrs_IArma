@@ -1,4 +1,9 @@
-"""Thin wrapper around the Anthropic SDK for vision + JSON workflows."""
+"""Thin wrapper around the Anthropic SDK for vision + JSON workflows.
+
+The model is multimodal: it accepts either an image block (jpeg/png/webp/gif)
+or a document block (application/pdf). The dispatcher here picks the right
+block type from the media_type, so callers don't need to know.
+"""
 import json
 import os
 import re
@@ -20,8 +25,29 @@ def get_client() -> Anthropic:
     return Anthropic(api_key=api_key)
 
 
+def build_media_block(media_b64: str, media_type: str) -> dict:
+    """Return the content block for either an image or a PDF, based on media_type.
+
+    PDFs use type='document', images use type='image'. The SDK accepts both
+    inside the messages.content array.
+    """
+    block_type = "document" if media_type == "application/pdf" else "image"
+    return {
+        "type": block_type,
+        "source": {
+            "type": "base64",
+            "media_type": media_type,
+            "data": media_b64,
+        },
+    }
+
+
 def call_vision(prompt: str, image_b64: str, media_type: str, max_tokens: int = 2000) -> str:
-    """Single-image vision call. Returns the text content of the first block."""
+    """Single-media vision call. Returns the text content of the first block.
+
+    The argument name is `image_b64` for backward compatibility; it now also
+    accepts a base64-encoded PDF when media_type is 'application/pdf'.
+    """
     client = get_client()
     msg = client.messages.create(
         model=MODEL,
@@ -30,14 +56,7 @@ def call_vision(prompt: str, image_b64: str, media_type: str, max_tokens: int = 
             {
                 "role": "user",
                 "content": [
-                    {
-                        "type": "image",
-                        "source": {
-                            "type": "base64",
-                            "media_type": media_type,
-                            "data": image_b64,
-                        },
-                    },
+                    build_media_block(image_b64, media_type),
                     {"type": "text", "text": prompt},
                 ],
             }

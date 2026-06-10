@@ -18,7 +18,7 @@ from typing import Any
 from pydantic import ValidationError
 
 from .category_registry import require_enabled_category
-from .client import MODEL, get_client
+from .client import MODEL, build_media_block, get_client
 from .images import load_image_for_api
 from .schema import AxisScore, Extracted, Inferred, Reference, Visual
 
@@ -221,14 +221,7 @@ def _judge_single(
                     {
                         "role": "user",
                         "content": [
-                            {
-                                "type": "image",
-                                "source": {
-                                    "type": "base64",
-                                    "media_type": media_type,
-                                    "data": image_b64,
-                                },
-                            },
+                            build_media_block(image_b64, media_type),
                             {"type": "text", "text": prompt},
                         ],
                     }

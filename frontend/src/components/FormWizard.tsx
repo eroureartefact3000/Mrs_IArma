@@ -28,7 +28,7 @@ const STEPS: { key: StepKey; question: string; hint?: string }[] = [
   {
     key: "image",
     question: "Upload your board",
-    hint: "JPG · PNG · WEBP · AVIF, up to 25 MB",
+    hint: "JPG · PNG · WEBP · AVIF · PDF, up to 25 MB",
   },
 ];
 
@@ -245,7 +245,7 @@ function FileUpload({ file, onChange }: FileUploadProps) {
     <label className="block cursor-pointer">
       <input
         type="file"
-        accept=".jpg,.jpeg,.png,.webp,.avif,.gif"
+        accept=".jpg,.jpeg,.png,.webp,.avif,.gif,.pdf,application/pdf"
         onChange={(e) => onChange(e.target.files?.[0] ?? null)}
         className="sr-only"
       />
