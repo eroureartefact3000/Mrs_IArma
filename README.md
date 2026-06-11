@@ -76,6 +76,7 @@ curl -X POST http://localhost:8000/api/evaluate \
 - **[PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md)**: non-engineering overview (goal, value, stack, milestones). Start here if you are in marketing or product.
 - **[INTEGRATION.md](INTEGRATION.md)**: full integration guide for front-end and back-end developers
 - **[HANDOFF.md](HANDOFF.md)**: one-pager for the deploy team
+- **[DEVELOPMENT.md](DEVELOPMENT.md)**: playbook for resuming or modifying the engine (environment check, recipes, Claude Code prompts, gotchas)
 - **[DOCUMENTATION.md](DOCUMENTATION.md)**: technical history of the project (methodology, calibration, decisions)
 - **[frontend/README.md](frontend/README.md)**: reference frontend (React + TS + Vite + Tailwind) handoff doc
 - **[data_internal/SYSTEM_CALIBRATION_NOTES.md](data_internal/SYSTEM_CALIBRATION_NOTES.md)**: calibration limits documented
